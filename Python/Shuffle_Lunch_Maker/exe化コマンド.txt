@@ -1,0 +1,2 @@
+cd Python\Shuffle_Lunch_Maker
+pyinstaller shuffle_lunch_maker.py --onefile --icon=shuffle_lunch_maker.ico
