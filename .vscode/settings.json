@@ -12,7 +12,10 @@
     ],
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": true,
-    "editor.guides.bracketPairsHorizontal": true
+    "editor.guides.bracketPairsHorizontal": true,
+    "files.associations": {
+        "string": "cpp"
+    }
     // code runnerの実行をターミナルでするように（標準入力が使えるように）
     //"editor.formatOnSave": true //自動成形はoff
 }
