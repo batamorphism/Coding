@@ -1,20 +1,3 @@
-def main():
-    q = int(input())  # データセットの数
-    X = []
-    Y = []
-    for _ in range(q):
-        x = input()
-        y = input()
-        X.append(x)
-        Y.append(y)
-
-    # DP = [[0]*(1000+1) for _ in range(1000+1)]
-
-    for i in range(q):
-        ans = lcs(X[i], Y[i])
-        print(ans)
-
-
 def lcs(X: str, Y: str) -> int:
     # DP[i][j] を、X[:i], Y[:j]のlcsの長さとする
     # DP[0][*] == 0
@@ -34,6 +17,23 @@ def lcs(X: str, Y: str) -> int:
             else:
                 DP[i][j] = max(DP[i][j-1], DP[i-1][j])
     return DP[len_x][len_y]
+
+
+def main():
+    q = int(input())  # データセットの数
+    X = []
+    Y = []
+    for _ in range(q):
+        x = input()
+        y = input()
+        X.append(x)
+        Y.append(y)
+
+    # DP = [[0]*(1000+1) for _ in range(1000+1)]
+
+    for i in range(q):
+        ans = lcs(X[i], Y[i])
+        print(ans)
 
 
 main()

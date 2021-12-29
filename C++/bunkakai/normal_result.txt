@@ -1,0 +1,19 @@
+PS D:\Users\Takanori\Documents\github\coding\coding\C++\bunkakai> cd "d:\Users\Takanori\Documents\github\coding\coding\C++\bunkakai\" ; if ($?) { g++ csv_read_normal.cpp -o csv_read_normal } ; if ($?) { .\csv_read_normal }
+ifstream_test
+1.34
+34.828sec
+ifstream_test_all_cast
+1.34
+135.25sec
+ifstream_test_only_read
+2.5975e+07
+5.688sec
+c_lang_lib_test
+1.34
+32.515sec
+create_bin_dat
+131.641sec
+read_bin_dat
+1.34
+6.172sec
+PS D:\Users\Takanori\Documents\github\coding\coding\C++\bunkakai>

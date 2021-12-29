@@ -49,11 +49,12 @@ class BalancingTree:
             return self.rightmost(nd.right)
         return nd
 
-    def find_l(self, v): # vより真に小さいやつの中での最大値（なければ-1）
+    def find_l(self, v):  # vより真に小さいやつの中での最大値（なければ-1）
         v += 1
         nd = self.root
         prev = 0
-        if nd.value < v: prev = nd.value
+        if nd.value < v:
+            prev = nd.value
         while True:
             if v <= nd.value:
                 if nd.left:
@@ -67,11 +68,12 @@ class BalancingTree:
                 else:
                     return prev - 1
 
-    def find_r(self, v): # vより真に大きいやつの中での最小値（なければRoot）
+    def find_r(self, v):  # vより真に大きいやつの中での最小値（なければRoot）
         v += 1
         nd = self.root
         prev = 0
-        if nd.value > v: prev = nd.value
+        if nd.value > v:
+            prev = nd.value
         while True:
             if v < nd.value:
                 prev = nd.value

@@ -20,14 +20,14 @@ class Floyd_Warshall:
         """
         # Vが0から始まる通し番号のリストであることをチェック
         assert len(set(V)) + 1 != max(V)
-        self._INF = 10**24
+        self._INF = float('inf')
         self._n = len(V)
         self._dist = [[self._INF]*self._n for _ in range(self._n)]
 
         for i in range(self._n):
             self._dist[i][i] = 0
-        for e in E:
-            self._dist[e[0]][e[1]] = e[2]
+        for fr, to, cost in E:
+            self._dist[fr][to] = cost
 
         for k in range(self._n):
             for i in range(self._n):
