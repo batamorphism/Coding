@@ -1,20 +1,14 @@
 def main():
-    S = input()
-    n = len(S)
-    max_ans = S
-    min_ans = S
-    for _ in range(n):
-        S = shift(S)
-        if max_ans < S:
-            max_ans = S
-        if min_ans > S:
-            min_ans = S
-    print(min_ans)
-    print(max_ans)
-
-
-def shift(S):
-    return S[1:]+S[0]
+    le, ri = map(int, input().split())
+    le -= 1
+    ri -= 1
+    s = input()
+    s_le = s[:le]
+    s_mid = s[le:ri+1]
+    s_ri = s[ri+1:]
+    s_mid = s_mid[::-1]
+    s_ans = s_le + s_mid + s_ri
+    print(s_ans)
 
 
 main()
