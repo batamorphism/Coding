@@ -1,0 +1,23 @@
+function Prompt
+{
+    ## 履歴から最後の項目を取得する
+    $historyItem = Get-History -Count 1
+    ## 履歴項目が存在する場合
+    if($historyItem)
+    {
+    ## 該当する項目に対する候補を取得する
+    $suggestions = @(Get-AliasSuggestion $historyItem.CommandLine)
+    ## 候補が存在する場合
+    if($suggestions)
+    {
+    ## 候補を順に画面に書き出す
+    foreach($aliasSuggestion in $suggestions)
+    {
+    Write-Host "$aliasSuggestion"
+    }
+    Write-Host ""
+    }
+    }
+    ## プロンプトを次のものに設定する
+    "PS [$env:COMPUTERNAME] >"
+}
