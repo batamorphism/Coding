@@ -1,3 +1,19 @@
-ARR = [[0.1]*10 for _ in range(5000*1200*20)]
+from functools import lru_cache
+import fractions
 
-print(ARR[0][0])
+
+def main():
+    _100_C_50 = factorial(100) // (factorial(50) * factorial(50))
+    pow_2_100 = 2**100
+    ans = fractions.Fraction(_100_C_50, pow_2_100)
+    print(ans.numerator)
+    print(ans.denominator)
+
+
+def factorial(x):
+    if x == 1:
+        return 1
+    return factorial(x-1)*x
+
+
+main()
