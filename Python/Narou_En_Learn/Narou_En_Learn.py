@@ -21,6 +21,14 @@ class Trans:
         self.bef_time = datetime.datetime.now()
 
     def trans(self, ptext):
+        """15秒ごとに、和文を英文に翻訳してstr型で返す
+
+        Args:
+            ptext ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
         while datetime.datetime.now() - self.bef_time <= self.sleeptime:
             time.sleep(1)
 
@@ -55,10 +63,10 @@ def get_nobel(base_url, cnt):
     return nobel.text.split('\n')
 
 
-def randTranslator(ptext_list, rate):
+def randTranslator(pjatext_list, rate):
     # text_listのランダムな要素を英訳したものを返す
     # 翻訳する割合はrate
-    text_list = ptext_list[:]  # イミュータブルのリストは浅いコピー
+    text_list = pjatext_list[:]  # イミュータブルのリストは浅いコピー
     tr = Trans()
 
     # print(text_list)
@@ -83,13 +91,13 @@ def get_data(base_url, cnt):
     if get_data.text_of[base_url + cnt] != 0:
         return get_data.text_of[base_url + cnt]
 
-    text_list = get_nobel(base_url, cnt)
-    bef_text = '\n'.join(text_list)
-    if text_list:  # 小説が取得できた場合だけ処理する
-        trans_text_list = randTranslator(text_list, 0.1)
-        trans_text = '\n'.join(trans_text_list)
-        get_data.text_of[base_url + cnt] = (trans_text, bef_text)
-        write_csv(base_url, cnt, trans_text, bef_text)
+    jatext_list = get_nobel(base_url, cnt)
+    jatext = '\n'.join(jatext_list)
+    if jatext_list:  # 小説が取得できた場合だけ処理する
+        entext_list = randTranslator(jatext_list, 0.1)
+        entext = '\n'.join(entext_list)
+        get_data.text_of[base_url + cnt] = (entext, jatext)
+        write_nobel_csv(base_url, cnt, entext, jatext)
         return True
     else:  # 取得できない場合はFalseを返す
         return False
@@ -120,7 +128,7 @@ def startup():
                 get_data.text_of[row[0]] = (row[1], row[2])
 
 
-def write_csv(base_url, cnt, entext, jatext):
+def write_nobel_csv(base_url, cnt, entext, jatext):
     save_dir = get_save_dir()
     csv_name = 'NEL_data.csv'
     csv_path = os.path.join(save_dir, csv_name)
@@ -192,7 +200,7 @@ def main():
     startup()
     is_en = True
     # ウィンドウに配置するコンポーネント
-    layout = [[sg.Text('対象の小説url'), sg.InputText('url', size=50, key='base_url')],
+    layout = [[sg.Text('対象の小説url'), sg.InputText('url', size=50, key='base_url'), sg.Text('EN', key='en_or_ja')],
             [sg.Text('対象の小説和数'), sg.InputText(999, size=5, key='cnt'), sg.Text('データの保存先'), sg.Text(get_save_dir())],
             [sg.Multiline(size=(40, 20), key='text', font=(None, 20)), sg.Multiline(size=(40, 20), key='jatext', font=(None, 20), visible = False)],
             [sg.Button('Run', bind_return_key=True), sg.Button('Next'), sg.Button('Prev'), sg.Button('Update'), sg.Button('Ja<->En'), sg.Button('DownLoadAll')]]
@@ -200,6 +208,7 @@ def main():
     # ウィンドウの生成
     window = sg.Window('Narou', layout, margins=(0,0), resizable=True, finalize=True)
     window["text"].expand(expand_x=True, expand_y=True)  # サイズを可変に
+
 
     # データ取得スレッドを起動
     Thread(target=get_data_thread, args=(), daemon=True).start()
@@ -265,6 +274,11 @@ def main():
             cnt = values['cnt']
             window['jatext'].update(visible=(not is_en))
             window['text'].update(visible=is_en)
+            if is_en:
+                window["text"].expand(expand_x=True, expand_y=True)
+            else:
+                window["jatext"].expand(expand_x=True, expand_y=True)
+            window['en_or_ja'].update('EN' if is_en else 'JA')
         elif event == 'DownLoadAll':
             base_url = values['base_url']
             Thread(target=downloadall, args=(base_url,), daemon=True).start()
