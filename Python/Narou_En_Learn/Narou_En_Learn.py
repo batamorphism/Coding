@@ -209,7 +209,6 @@ def main():
     window = sg.Window('Narou', layout, margins=(0,0), resizable=True, finalize=True)
     window["text"].expand(expand_x=True, expand_y=True)  # サイズを可変に
 
-
     # データ取得スレッドを起動
     Thread(target=get_data_thread, args=(), daemon=True).start()
 
