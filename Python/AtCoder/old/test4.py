@@ -1,32 +1,21 @@
-from collections import deque
+from googletrans import Translator
 import time
 
+# Translatorクラスのインスタンスを生成
+translator = Translator(service_urls=['translate.googleapis.com'])
 
-def main():
-    que = deque(range(10**8))
-    n = len(que) - 1
-    ans = 0
+# 翻訳元の文章
+string_ja = "今日も頑張ってPythonを勉強しよう。"
 
-    print('get_que[0]')
-    start_time = time.perf_counter()
-    for _ in range(10**2):
-        ans += que[0]
-    end_time = time.perf_counter()
-    print(end_time - start_time)
+time.sleep(10)
+# 文章を英語に翻訳する
+while True:
+    try:
+        trans_en = translator.translate(string_ja, dest='en', src='ja')
+        break
+    except Exception as e:
+        translator = Translator(service_urls=['translate.googleapis.com'])
+        time.sleep(10)
+        print('err')
 
-    print('get_que[n]')
-    start_time = time.perf_counter()
-    for _ in range(10**2):
-        ans += que[n]
-    end_time = time.perf_counter()
-    print(end_time - start_time)
-
-    print('get_que[n//2]')
-    start_time = time.perf_counter()
-    for _ in range(10**2):
-        ans += que[n//2]
-    end_time = time.perf_counter()
-    print(end_time - start_time)
-
-
-main()
+print(trans_en.text)
