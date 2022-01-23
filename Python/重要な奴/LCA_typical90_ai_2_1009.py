@@ -1,7 +1,9 @@
+import enum
 import sys
-read = sys.stdin.buffer.read
 
 
+# ダブリング
+# 経路圧縮
 # doubling
 class LCA():
     def __init__(self, links, root):
@@ -52,42 +54,50 @@ class LCA():
                 y = self.dbl[y][bi]
         return self.dbl[x][0]
 
+    def dist(self, fr, to):
+        # frからtoへの距離を求める
+        lca_of_fr_to = self.lca(fr, to)
+        return self.depth[fr] + self.depth[to] - 2 * self.depth[lca_of_fr_to]
 
-n, *data = map(int, read().split())
-ab = data[:2*(n-1)]
-q = data[2*(n-1)]
-kv = data[2*(n-1)+1:]
 
-links = [[] for _ in range(n)]
-it = iter(ab)
-for a, b in zip(it, it):
-    a -= 1
-    b -= 1
-    links[a].append(b)
-    links[b].append(a)
+def main():
+    read = sys.stdin.buffer.read
+    # Ctrl+Zで入力終了
+    data = map(int, read().split())
+    node_end = next(data)
+    nei_of = [[] for _ in range(node_end)]
+    for _ in range(node_end-1):
+        a, b = next(data), next(data)
+        a -= 1
+        b -= 1
+        nei_of[a].append(b)
+        nei_of[b].append(a)
+    q_end = next(data)
+    query_list = []
+    for _ in range(q_end):
+        k = next(data)
+        query = []
+        for _ in range(k):
+            query.append(next(data)-1)
+        query_list.append(query)
 
-lca = LCA(links, 0)
-sort_num = [0] * n
-for i, oi in enumerate(lca.order):
-    sort_num[oi] = i
+    lca = LCA(nei_of, 0)
+    order = lca.order
+    rev_order = [0] * lca.n
+    for i, node in enumerate(order):
+        rev_order[node] = i
 
-ans = []
-idx = 0
-for _ in range(q):
-    k = kv[idx]
-    v = [i-1 for i in kv[idx+1:idx+1+k]]
-    idx += 1+k
+    for query in query_list:
+        # queryをdfsでの巡回順にソート
+        query.sort(key=lambda x: rev_order[x])
+        # queryの並び順で、経路を求めていく
+        query_len = len(query)
+        ans = 0
+        for fr_i, fr in enumerate(query):
+            to_i = (fr_i+1) % query_len
+            to = query[to_i]
+            ans += lca.dist(fr, to)
+        print(ans//2)
 
-    v.sort(key=lambda x: sort_num[x])
 
-    tmp = 0
-    for i in range(k):
-        x = v[i-1]
-        y = v[i]
-        lca_xy = lca.lca(x, y)
-        tmp += lca.depth[x] + lca.depth[y] - lca.depth[lca_xy] * 2
-
-    tmp //= 2
-    ans.append(tmp)
-
-print('\n'.join(map(str, ans)))
+main()
