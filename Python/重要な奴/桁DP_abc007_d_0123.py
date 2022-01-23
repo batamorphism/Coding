@@ -36,7 +36,7 @@ def solve(number_int):
         # 3.1 0を追加
         # highが0の場合、0を追加しても0のままでおかしくなるので、初回はこの処理は走らない
         if deg >= 1:
-            # hign*10が題意を満たす場合のみ、0を追加できる
+            # high*10が題意を満たす場合のみ、0を追加できる
             if str(high).count('4') + str(high).count('9') == 0:
                 if nex_val >= 1:
                     DP[deg+1] += 1
