@@ -25,10 +25,10 @@ class FeatureEng:
             path ([string]): 保存先のフォルダ
             path ([string]): 保存先のファイル名
         """
-        if path == None:
+        if path is None:
             print('保存先のファイル名を入力してください')
             path = input()
-        if name == None:
+        if name is None:
             # pathがファイル名も含んでいると判断する
             list_ = list(path.split('.'))
             not_have_period = len(list_) <= 1
