@@ -249,3 +249,228 @@ Sub Sample()
     Debug.Print s
 End Sub
 ```
+
+## 3. ステートメント
+
+### 3-1. Exitステートメント
+
+プロシージャを作成し、即時にExitステートメントで抜けよ。
+
+```VB
+Sub Sample()
+    Exit Sub
+End Sub
+
+
+Function Sample2()
+    Exit Function
+End Function
+```
+
+ForループとWhileループを作成し、即時にExitステートメントで抜けよ。
+
+```VB
+Sub Sample1()
+    Dim i As Integer
+    For i = 0 To 100
+        Exit For
+    Next
+    Do While True
+        Exit Do
+    Loop
+End Sub
+
+```
+
+### 3-2. Select Caseステートメント
+
+整数値による分岐をSelectを用い作成せよ
+
+```VB
+Sub Sample1()
+    Dim val As Long
+    val = 1
+    Select Case val
+        Case 1
+            Debug.Print "hoge"
+        Case 2
+            Debug.Print "piyo"
+        Case 3
+            Debug.Print "fuga"
+    End Select
+End Sub
+```
+
+文字列による分岐をSelectを用い作成せよ
+
+```VB
+Sub Sample1()
+    Dim s As String
+    s = "月曜"
+    Select Case s
+        Case "月曜"
+            Debug.Print "hoge"
+        Case "火曜"
+            Debug.Print "piyo"
+        Case "水曜"
+            Debug.Print "fuga"
+    End Select
+End Sub
+```
+
+A1セルに入力された値が10未満の場合と20以上の場合とそれ以外で処理を分岐させよ
+
+```VB
+Sub Sample1()
+    Dim val As Long
+    val = Range("A1").Value
+    Select Case val
+        Case Is < 10
+            Debug.Print "hoge"
+        Case Is >= 20
+            Debug.Print "piyo"
+        Case Else
+            Debug.Print "fuga"
+    End Select
+End Sub
+```
+
+### 3-3. Do...Loopステートメント
+
+WhileループとDo Whileループを作成し、即座にExitで抜けよ
+
+```VB
+Sub Sample1()
+    Do While True
+        Exit Do
+    Loop
+    Do
+        Exit Do
+    Loop While True
+End Sub
+```
+
+Untilを用い、A1セルが空欄の間は処理を繰り返せ
+
+```VB
+Sub Sample1()
+    Do Until Range("A1").Value <> ""
+        Exit Do
+    Loop
+End Sub
+```
+
+### 3-4. For Each ステートメント
+
+ワークシートの名前を列挙せよ
+
+```VB
+Sub Sample1()
+    Dim ws As Worksheet
+    For Each ws In Worksheets
+        Debug.Print ws.Name
+    Next
+End Sub
+```
+
+Range("A1:A3")の全ての値を2倍にせよ
+
+```VB
+Sub Sample1()
+    Dim rng As Range
+    For Each rng In Range("A1:A3")
+        rng.Value = rng.Value * 2
+    Next
+End Sub
+```
+
+選択されているセル全ての値を2倍にせよ
+
+```VB
+Sub Sample1()
+    Dim rng As Range
+    For Each rng In Selection
+        rng.Value = rng.Value * 2
+    Next
+End Sub
+```
+
+長さ3、要素10, 20, 30の配列を作成し、総和をとれ
+
+```VB
+Sub Sample1()
+    Dim A As Variant: A = Array(10, 20, 30)
+    Dim a_i As Variant
+    Dim sum_a As Long
+    For Each a_i In A
+        sum_a = sum_a + a_i
+    Next
+    Debug.Print sum_a
+End Sub
+```
+
+### 3-5. Ifステートメント
+
+今日が月曜日の場合、1を、それ以外の時は0を出力せよ
+
+```VB
+Sub Sample1()
+    Dim wd As String
+    wd = WeekdayName(Weekday(Now()))
+    If wd = "月曜日" Then
+        Debug.Print 1
+    Else
+        Debug.Print 0
+    End If
+End Sub
+```
+
+## 4. ファイルの操作
+
+### 4-1. ブックを開く
+
+新しいファイルを作成し、ファイルを保存し、ファイルを閉じ、そのファイルを開け
+
+```VB
+Sub Sample1()
+    Dim wb As Workbook, fn As String
+    Set wb = Workbooks.Add
+    Call wb.SaveAs(Filename:="test")
+    fn = wb.FullName
+    wb.Close
+    Call Workbooks.Open(Filename:=fn)
+End Sub
+```
+
+今日の西暦、月、日付を文字列で表示せよ
+
+```VB
+Sub Sample1()
+    Debug.Print Format(Now(), "yyyymmdd")
+End Sub
+```
+
+### 4-3. ファイルをコピーする
+
+新しいファイルを作成し、ファイルを保存し、ファイルを別名でコピーせよ
+
+```VB
+Sub Sample1()
+    Dim wb As Workbook, fn As String
+    Set wb = Workbooks.Add
+    wb.SaveAs Filename:="test"
+    fn = wb.FullName
+    wb.Close
+    Call FileCopy(fn, "test2.xlsx")
+End Sub
+```
+
+### 4-4. フォルダーを作成せよ
+
+フォルダーを作成せよ
+
+```VB
+Sub Sample1()
+    MkDir "test"
+End Sub
+```
