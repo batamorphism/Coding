@@ -662,3 +662,75 @@ Sub Sample()
 End Sub
 ```
 
+## 7. データの並び替え
+
+### 7-1. Excel2007以降の並び替え
+
+A~D列に乱数が入ったシートを、D列の値順で、Sortオブジェクトを用い、引数はすべて規定値で並び替えよ。
+
+```VB
+Sub Sample1()
+    Dim ws As Worksheet
+    Set ws = Sheets("Sheet1")
+    With ws.Sort
+        .SortFields.Clear
+        .SortFields.Add2 Key:=Range("D2")
+
+        .SetRange Range("A:D")
+        .Apply
+    End With
+End Sub
+```
+
+Excel2007以降に追加された、Sortオブジェクトの引数について、次の空欄を埋めよ
+
+|引数SortOn|意味|
+|:-:|:-:|
+|xlSortOnValues|セル内のデータで並び替える|
+|xlSortOnCellColor|セルの背景色で並び替える|
+|xlSortOnFontColor|セルの文字色で並び替える|
+|xlSortOnIcon|条件付き書式のアイコンで並び替える|
+
+|引数Order|意味|
+|:-:|:-:|
+|xlAscending|昇順|
+|xlDescending|降順|
+
+|引数DataOption|意味|
+|:-:|:-:|
+|xlSortNormal|数値と文字列を別々に並び替える|
+|xlSortTextAsNumbers|文字列を数値とみなして並び替える|
+
+|Headerプロパティ|意味|
+|:-:|:-:|
+|xlGuess|自動判定|
+|xlYes|1行目は飛ばす|
+|xlNo|1行目も含む|
+
+|Orientationプロパティ|意味|
+|:-:|:-:|
+|xlTopToBottom|上下に並び替え|
+|xlLeftToRight|左右に並び替える|
+
+|SortMethodプロパティ|意味|
+|:-:|:-:|
+|xlPinYin|ふりがなで並び替え|
+|xlStroke|文字コードで並び替え|
+
+### 7-2. Excel2003までの並び替え
+
+A1~D10セルを、Sortメソッドを用いソートせよ
+
+```VB
+Sub Sample2()
+    Range("A1:D10").Sort key1:=Range("A1"), Order1:=xlAscending, Header:=xlYes
+End Sub
+```
+
+A1セルのフリガナが設定されているか判定せよ
+
+```VB
+Sub Sample3()
+    Debug.Print Range("A1").Phonetic.Text <> Range("A1").Value
+End Sub
+```
