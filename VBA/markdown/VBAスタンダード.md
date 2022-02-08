@@ -474,3 +474,191 @@ Sub Sample1()
     MkDir "test"
 End Sub
 ```
+
+## 5. ワークシート関数
+
+### 5-2. いろいろな関数
+
+ワークシート関数を駆使し、A列で3番目に大きい値と、3番目に小さい値を求めよ
+
+```VB
+Sub Sample()
+    With WorksheetFunction
+        Debug.Print .Large(Range("A:A"), 3)
+        Debug.Print .Small(Range("A:A"), 3)
+    End With
+End Sub
+```
+
+ワークシート関数を駆使し、今月の末尾が何日か調べよ
+
+```VB
+Sub Sample()
+    Dim d As Date
+    d = WorksheetFunction.EoMonth(Now(), 0)
+    Debug.Print d
+End Sub
+```
+
+2022年2月1日が何曜日か調べよ
+
+```VB
+Sub Sample()
+    Dim d As Date
+    d = DateSerial(2022, 2, 1)
+    Debug.Print WeekdayName(Weekday(d))
+End Sub
+```
+
+## 6. セルの検索とオートフィルター
+
+### 6-1. セルの検索
+
+A列のうち、"涼宮"を含むセルを探し、選択せよ
+
+```VB
+Sub Sample()
+    Dim find As Range
+    Set find = Range("A:A").find("涼宮")
+    find.Select
+End Sub
+```
+
+A列のうち、"長門"を含むセルを探し、存在しなかった場合-1を出力せよ
+
+```VB
+Sub Sample()
+    Dim find As Range
+    Set find = Range("A:A").find("長門")
+    If find Is Nothing Then
+        Debug.Print -1
+    Else:
+        find.Select
+    End If
+End Sub
+```
+
+A1:Z999セルのうち、C10セルより後で初めて"涼宮"が出てくるセルを選択せよ
+
+```VB
+Sub Sample()
+    Dim find As Range
+    Set find = Range("A1:Z999").find("涼宮", Range("C10"))
+    find.Select
+End Sub
+```
+
+A列のうち、完全一致で"涼宮"を検索し、セルを選択せよ
+
+```VB
+Sub Sample()
+    Dim find As Range
+    Set find = Range("A:A").find("涼宮", LookAt:=xlWhole)
+    find.Select
+End Sub
+```
+
+A列のうち、部分一致で"涼宮"を検索し、セルを選択せよ
+
+```VB
+Sub Sample()
+    Dim find As Range
+    Set find = Range("A:A").find("涼宮", LookAt:=xlPart)
+    find.Select
+End Sub
+```
+
+### 6-2. 検索結果の操作
+
+A列のうち、"涼宮"を含むセルを探し、その行を削除せよ
+
+```VB
+Sub Sample()
+    Dim find As Range
+    Set find = Range("A:A").find("涼宮")
+    find.EntireRow.Delete
+End Sub
+```
+
+A列のうち、"涼宮"を含むセルを探し、1列右のセルに1000と入力せよ
+
+```VB
+Sub Sample()
+    Dim find As Range
+    Set find = Range("A:A").find("涼宮")
+    find.Offset(0, 1).Value = 1000
+End Sub
+```
+
+A列のうち、"涼宮"を含むセルを探し、そのセルから右に有効値が続く限りの範囲を（Shift+Ctrl+Rightと同じ操作）D1セルにコピーせよ
+
+```VB
+Sub Sample()
+    Dim find As Range
+    Set find = Range("A:A").find("涼宮")
+    Call Range(find, find.End(xlToRight)).Copy(Range("D1"))
+End Sub
+```
+
+A列のうち、"涼宮"を含むセルを探し、そのセルを含む1行3列の範囲をD1セルにコピーせよ
+
+```VB
+Sub Sample()
+    Dim find As Range
+    Set find = Range("A:A").find("涼宮")
+    Call find.Resize(1, 3).Copy(Range("D1"))
+End Sub
+```
+
+### 6-3. オートフィルターの操作
+
+オートフィルターで、B列の値が300以上900未満の行を絞り込め
+
+```VB
+Sub Sample()
+    Call Range("A1").AutoFilter(2, ">=300", xlAnd, "<900")
+End Sub
+```
+
+オートフィルターで、A列の値が"涼宮", "長門", "朝比奈"の行を絞り込め
+
+```VB
+Sub Sample()
+    Dim filt_val_list As Variant
+    filt_val_list = Array("涼宮", "長門", "朝比奈")
+    Call Range("A1").AutoFilter(1, filt_val_list, xlFilterValues)
+End Sub
+```
+
+オートフィルターで、A列が"涼宮"の行を絞り込み、新たに追加したシートに絞り込んだ結果をコピーせよ
+
+```VB
+Sub Sample()
+    Dim cur_ws As Worksheet, add_ws As Worksheet
+    Set cur_ws = ActiveSheet
+    Set add_ws = Worksheets.Add
+    Call cur_ws.Range("A1").AutoFilter(1, "涼宮")
+    Call cur_ws.Range("A1").CurrentRegion.Copy(add_ws.Range("A1"))
+End Sub
+```
+
+オートフィルターで、A列の値が"涼宮"のものを絞り込み、ワークシート関数を駆使し、絞り込んだ結果が何行あるか調べよ
+
+```VB
+Sub Sample()
+    Call Range("A1").AutoFilter(1, "涼宮")
+    Dim cnt As Long
+    Debug.Print WorksheetFunction.Subtotal(3, Range("A:A")) - 1
+End Sub
+```
+
+オートフィルターを駆使し、A列の値が"涼宮"の場合、B列の値を100とせよ
+
+```VB
+Sub Sample()
+    Call Range("A1").AutoFilter(1, "涼宮")
+    Range(Range("A2"), Range("A2").End(xlDown)).Offset(0, 1).Value = 100
+    Range("A1").AutoFilter
+End Sub
+```
+

@@ -1,48 +1,64 @@
-def solve():
-  MOD = 998244353
-  n = int(input())
-  l = [-1] + [*map(lambda x:ord(x)-ord("A"), list(input()))]
+import Python.AtCoder.pypyjit as pypyjit
+pypyjit.set_param('max_unroll_recursion=-1')
+pypyjit.set_param('disable_unrolling=-1')
+# bit-DP
+def main():
+    # input
+    n, k = map(int, input().split())
+    points = []
+    for _ in range(n):
+        x, y = map(int, input().split())
+        points.append((x, y))
 
-  #dp[i][s][a, b] aはそのコンテストに出場しない場合 bはする場合
-  dp = [[[1,0]]+[[0,0] for _ in [0]*((1<<10)-1)] for _ in [0]*(n+1)]
+    INF = 2*10**18+1
+    max_dist = 0
+    # dist_2p[p1][p2] = p1,p2の2点間の距離
+    dist_2p = [[0]*n for _ in range(n)]
+    for p1_i, p1 in enumerate(points):
+        for p2_i, p2 in enumerate(points):
+            x1, y1 = p1
+            x2, y2 = p2
+            dist_2p[p1_i][p2_i] = (x2-x1)**2+(y2-y1)**2
+            max_dist = max(dist_2p[p1_i][p2_i], max_dist)
 
-  for i in range(1, n+1):
-    #x: 今回のコンテスト
-    #xx: 前回のコンテスト
-    x = l[i]
-    xx = l[i-1]
-    for j in range(1, 1<<10):
-      #出場しない場合
-      dp[i][j][0] += sum(dp[i-1][j])
+    MAX = 1 << n  # MAX<=32,768
+    # dist[bit] = 各グループbitの距離の最大値
+    dist = [INF]*(MAX)
+    for bit in range(MAX):
+        p_list = []
+        for point in range(n):
+            if bit >> point & 1:
+                p_list.append(point)
+        if len(p_list) <= 1:
+            dist[bit] = 0
+            continue
+        d = 0
+        for p1 in p_list:
+            for p2 in p_list:
+                if p2 > p1:
+                    break
+                d = max(d, dist_2p[p1][p2])
+        dist[bit] = d
 
-      #集合にxが入ってる時のみ処理
-      if (j>>x)&1:
+    # bit-DP
+    # DP[bit][grp] = 現在、bitの点をgrp個に分割して選んでいる状態での、各グループ内の距離の最大値の最小値
+    # 答えはbit[MAX][k]になる
+    DP = [[INF]*(k+1) for _ in range(MAX)]
+    DP[0][0] = 0
+    for bit in range(1, MAX):
+        p_cnt = 0
+        for i in range(n):
+            if (bit >> i & 1):
+                p_cnt += 1
+        for grp in range(1, min(k, p_cnt)+1):
+            sub_bit = bit  # bitの部分集合
+            com_bit = 0    # bit-sub_bit
+            while sub_bit:
+                sub_bit = (sub_bit-1) & bit
+                com_bit = bit ^ sub_bit
+                DP[bit][grp] = min(max(DP[sub_bit][grp-1], dist[com_bit]), DP[bit][grp])
 
-        #xを抜いた集合
-        jj = (1<<x)^j
+    print(DP[-1][-1])
 
-        #初めて出場
-        dp[i][j][1] += sum(dp[i-1][jj])
 
-        #初めてじゃないけど出場
-        if jj == 0:
-          #コンテストの種類が１種類の場合
-          dp[i][j][1] += sum(dp[i-1][j])
-        elif x == xx:
-          # <- 前回のコンテストに出場していない場合、前回出場したコンテストはxxになるとは限らない。
-          # <- したがって、DPに、前回出場したコンテストを持たせる必要がある。
-          #コンテストの種類が複数+前回と同じコンテスト
-          dp[i][j][1] += dp[i-1][j][1]
-
-      dp[i][j][0] %= MOD
-      dp[i][j][1] %= MOD
-
-  cnt = 0
-  for pls in dp[-1][1:]:
-    cnt += sum(pls)
-    cnt %= MOD
-
-  print(cnt)
-
-if __name__ == '__main__':
-  solve()
+main()
