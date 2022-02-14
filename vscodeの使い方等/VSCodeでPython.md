@@ -74,3 +74,8 @@
 * 拡張機能**Python Docstring Generator**をインストールする（Docstring自動生成）
 * 拡張機能**Python Indent**をインストールする
 * 拡張機能**Trailing Spaces**をインストールする(無駄な空白表示)
+
+## STEP6その他
+
+* [Python Windows] Pythonバージョンを指定してpip install
+  * https://qiita.com/Qiitaman/items/f874fb87273d1fa459c8
