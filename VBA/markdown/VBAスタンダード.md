@@ -734,3 +734,34 @@ Sub Sample3()
     Debug.Print Range("A1").Phonetic.Text <> Range("A1").Value
 End Sub
 ```
+
+## 8. テーブルの操作
+
+### 8-1. テーブルを特定する
+
+A1セルにあるテーブルを変数に入れよ
+
+```VB
+Sub Sample1()
+    Dim tbl As ListObject
+    Set tbl = Range("A1").ListObject
+End Sub
+```
+
+Sheet1にある1つめのテーブルを変数に入れよ
+
+```VB
+Sub Sample1()
+    Dim tbl As ListObject
+    Set tbl = Worksheets(1).ListObjects(1)
+End Sub
+```
+
+テーブル1のタイトル行を含む全体を選択せよ
+
+```VB
+Sub Sample1()
+    ActiveSheet.ListObjects("テーブル1").Range.Select
+End Sub
+```
+
