@@ -682,7 +682,7 @@ Sub Sample1()
 End Sub
 ```
 
-Excel2007以降に追加された、Sortオブジェクトの引数について、次の空欄を埋めよ
+Excel2007以降に追加された、Sortオブジェクトの引数について、次表を埋めよ
 
 |引数SortOn|意味|
 |:-:|:-:|
@@ -764,4 +764,3 @@ Sub Sample1()
     ActiveSheet.ListObjects("テーブル1").Range.Select
 End Sub
 ```
-

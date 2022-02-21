@@ -1,3 +1,9 @@
-Function Sample()
-    Sample = Range("A1").Value * 2
-End Function
+Sub Sample1()
+    Do While True
+        Exit Do
+    Loop
+
+    Do
+        Exit Do
+    Loop While True
+End Sub
