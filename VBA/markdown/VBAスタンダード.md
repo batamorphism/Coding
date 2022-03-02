@@ -757,10 +757,136 @@ Sub Sample1()
 End Sub
 ```
 
+### 8-2. テーブルの部位を特定する
+
 テーブル1のタイトル行を含む全体を選択せよ
 
 ```VB
 Sub Sample1()
     ActiveSheet.ListObjects("テーブル1").Range.Select
+End Sub
+```
+
+テーブル1のタイトル行を含まないテーブルのデータ全体を選択せよ
+
+```VB
+Sub Sample1()
+    ActiveSheet.ListObjects("テーブル1").DataBodyRange.Select
+End Sub
+```
+
+テーブル1のタイトル行を選択せよ
+
+```VB
+Sub Sample1()
+    ActiveSheet.ListObjects("テーブル1").HeaderRowRange.Select
+End Sub
+```
+
+テーブル1の列全体を順番に選択せよ
+
+```VB
+Sub Sample1()
+    Dim list_cols As ListColumns
+    Set list_cols = ActiveSheet.ListObjects("テーブル1").ListColumns
+    Dim col As ListColumn
+    For Each col In list_cols
+        col.Range.Select
+    Next
+End Sub
+```
+
+テーブル1の列の見出し行を含まないでデータを順番に選択せよ
+
+```VB
+Sub Sample1()
+    Dim list_cols As ListColumns
+    Set list_cols = ActiveSheet.ListObjects("テーブル1").ListColumns
+    Dim col As ListColumn
+    For Each col In list_cols
+        col.DataBodyRange.Select
+    Next
+End Sub
+```
+
+テーブル1の行を順番に選択せよ
+
+```VB
+Sub Sample1()
+    Dim list_rows As ListRows
+    Set list_rows = ActiveSheet.ListObjects("テーブル1").ListRows
+    Dim row As ListRow
+    For Each row In list_rows
+        row.Range.Select
+    Next
+End Sub
+```
+
+### 8-3. 構造化参照を使って特定する
+
+テーブルのうちヘッダーを含まないデータ全体を構造化参照で選択せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1").Select
+End Sub
+```
+
+テーブル全体を構造化参照で選択せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1[#ALL]").Select
+End Sub
+```
+
+テーブルのうち特定の列をヘッダーを含めず構造化参照で選択せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1[c1]").Select
+End Sub
+```
+
+テーブルのうち特定の列をヘッダーを含めて構造化参照で選択せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1[[#ALL], [c1]]").Select
+End Sub
+```
+
+### 8-4. 特定のデータを捜査する
+
+テーブルを特定の条件で抽出し、見出し行を含めずコピーせよ
+
+```VB
+Sub Sample1()
+    Range("A1").ListObject.DataBodyRange.AutoFilter 1, "=1"
+    Range("A1").ListObject.DataBodyRange.Copy Range("A20")
+End Sub
+```
+
+### 8-5. テーブルの行全体を削除せよ
+
+ListObjectを用い、特定の条件を満たす行を削除せよ
+
+```VB
+Sub Sample1()
+    With Range("A1").ListObject.DataBodyRange
+        .AutoFilter 1, "=1"
+        .EntireRow.Delete
+        .AutoFilter 1
+    End With
+End Sub
+```
+
+構造化参照を用い、特定の条件を満たす行を削除せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1").AutoFilter 1, "=1"
+    Range("テーブル1[#Data]").EntireRow.Delete
+    Range("テーブル1").AutoFilter 1
 End Sub
 ```

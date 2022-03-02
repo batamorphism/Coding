@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>VBAスタンダード.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="vba%E3%82%A8%E3%82%AD%E3%82%B9%E3%83%91%E3%83%BC%E3%83%88%E8%A9%A6%E9%A8%93">VBAエキスパート試験</h1>
+<h2 id="1-%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3">1. プロシージャ</h2>
+<h3 id="1-1-%E4%BB%96%E3%81%AE%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3%E3%82%92%E5%91%BC%E3%81%B3%E5%87%BA%E3%81%99">1-1. 他のプロシージャを呼び出す</h3>
+<p>A1セルの2倍の値をB1セルに代入せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    Range(<span class="hljs-string">"B1"</span>) = Range(<span class="hljs-string">"A1"</span>).Value
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>Sample1プロシージャを呼び出せ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample2()
+    <span class="hljs-keyword">Call</span> Sample
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>ローカル変数Aを定義し、100を代入せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample3()
+    <span class="hljs-keyword">Dim</span> A <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    A = <span class="hljs-number">100</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>モジュールレベル変数Aを定義し、100を代入せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Dim</span> A <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+
+<span class="hljs-keyword">Sub</span> Sample4()
+    A = <span class="hljs-number">100</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="1-2-function%E3%83%97%E3%83%AD%E3%82%B7%E3%83%BC%E3%82%B8%E3%83%A3">1-2. Functionプロシージャ</h3>
+<p>A1セルの2倍の値を返すFunctionプロシージャを作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Function</span> Sample1()
+    Sample1 = Range(<span class="hljs-string">"A1"</span>) * <span class="hljs-number">2</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Function</span>
+</div></code></pre>
+<p>ある名前のシートが存在するか確認するFunctionプロシージャCheckSheetを作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Function</span> CheckSheet(p_sheet_name <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>)
+    <span class="hljs-keyword">Dim</span> ws <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> ws <span class="hljs-keyword">In</span> Worksheets
+        <span class="hljs-keyword">If</span> ws.Name = p_sheet_name <span class="hljs-keyword">Then</span>
+            CheckSheet = <span class="hljs-literal">True</span>
+            <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Function</span>
+        <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">Next</span>
+    CheckSheet = <span class="hljs-literal">False</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Function</span>
+</div></code></pre>
+<h3 id="1-3-%E5%BC%95%E6%95%B0%E3%82%92%E6%B8%A1%E3%81%99">1-3. 引数を渡す</h3>
+<p>値を引数として受け取り、メッセージボックスとして出力するプロシージャを作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1(A <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>)
+    MsgBox A
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>「ByRef」を使わず、参照渡しで値を2倍にするプロシージャを作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-comment">' ByValを明言しない場合、勝手に参照渡しとなり危険</span>
+<span class="hljs-keyword">Sub</span> Sample(p_value)
+    p_value = p_value * <span class="hljs-number">2</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>値渡しで値を2倍にするプロシージャを作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample(<span class="hljs-keyword">ByVal</span> p_value)
+    p_value = p_value * <span class="hljs-number">2</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>明示的に参照渡しにせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample(<span class="hljs-keyword">ByRef</span> p_value)
+    p_value = p_value * <span class="hljs-number">2</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="1-4-%E5%BC%95%E6%95%B0%E3%82%92%E4%BD%BF%E3%82%8F%E3%81%AA%E3%81%84%E3%81%A7%E5%80%A4%E3%82%92%E5%85%B1%E6%9C%89%E3%81%99%E3%82%8B">1-4. 引数を使わないで値を共有する</h3>
+<p>引数を使わないで、変数に100を代入するプロシージャと、その変数の値をメッセージボックスで出力するプロシージャを作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Dim</span> A <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+
+
+<span class="hljs-keyword">Sub</span> Sample1()
+    A = <span class="hljs-number">100</span>
+    <span class="hljs-keyword">Call</span> Sample2
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+
+<span class="hljs-keyword">Sub</span> Sample2()
+    MsgBox A
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h2 id="2-%E5%A4%89%E6%95%B0">2. 変数</h2>
+<h3 id="2-1-%E9%85%8D%E5%88%97">2-1. 配列</h3>
+<p>長さ4の配列を宣言せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> A(<span class="hljs-number">3</span>) <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>文字列&quot;a-b-c&quot;を、-区切りで要素数3の配列にせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> A <span class="hljs-keyword">As</span> Variant
+    A = Split(<span class="hljs-string">"a-b-c"</span>, <span class="hljs-string">"-"</span>)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>与えられた配列について、配列の要素数を調べ、インデックスで配列の要素を取得し、Debug.Printするプロシージャを作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1(A <span class="hljs-keyword">As</span> Variant)
+    <span class="hljs-keyword">Dim</span> i <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    <span class="hljs-keyword">For</span> i = <span class="hljs-number">0</span> <span class="hljs-keyword">To</span> UBound(A)
+        Debug.Print A(i)
+    <span class="hljs-keyword">Next</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="2-2-%E5%8B%95%E7%9A%84%E9%85%8D%E5%88%97">2-2. 動的配列</h3>
+<p>動的配列を宣言し、要素数3に変更せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> A() <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+    <span class="hljs-keyword">ReDim</span> A(<span class="hljs-number">2</span>)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>引数として与えられた動的配列に、引数として与えられた変数を追加するプロシージャPushBackを作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> PushBack(<span class="hljs-keyword">ByRef</span> p_A <span class="hljs-keyword">As</span> Variant, <span class="hljs-keyword">ByVal</span> p_val <span class="hljs-keyword">As</span> Variant)
+    <span class="hljs-keyword">Dim</span> len_A <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    len_A = UBound(p_A)
+    <span class="hljs-keyword">ReDim</span> <span class="hljs-keyword">Preserve</span> p_A(len_A + <span class="hljs-number">1</span>)
+    p_A(len_A + <span class="hljs-number">1</span>) = p_val
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+<span class="hljs-keyword">Sub</span> Test()
+    <span class="hljs-keyword">Dim</span> A() <span class="hljs-keyword">As</span> Variant, i <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>
+    A = Array()
+    <span class="hljs-keyword">For</span> i = <span class="hljs-number">0</span> <span class="hljs-keyword">To</span> <span class="hljs-number">100</span>
+        <span class="hljs-keyword">Call</span> PushBack(A, i)
+    <span class="hljs-keyword">Next</span>
+    <span class="hljs-keyword">For</span> i = <span class="hljs-number">0</span> <span class="hljs-keyword">To</span> <span class="hljs-number">100</span>
+        Debug.Print A(i)
+    <span class="hljs-keyword">Next</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="2-3-%E3%82%AA%E3%83%96%E3%82%B8%E3%82%A7%E3%82%AF%E3%83%88%E5%A4%89%E6%95%B0">2-3. オブジェクト変数</h3>
+<p>変数にRangeオブジェクトのA1セルを格納せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> rng <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> rng = Range(<span class="hljs-string">"A1"</span>)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>今開いているワークシートを変数に保持し、新たにシートを追加して名前を「追加」に変更し、元のワークシートをアクティブ化せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> cur_ws <span class="hljs-keyword">As</span> Worksheet, add_ws <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">Set</span> cur_ws = ActiveSheet
+    <span class="hljs-keyword">Set</span> add_ws = Worksheets.Add()
+    add_ws.Name = <span class="hljs-string">"追加"</span>
+    cur_ws.Activate
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="2-4-%E5%A4%89%E6%95%B0%E3%81%AE%E6%BC%94%E7%AE%97">2-4. 変数の演算</h3>
+<p>A1～A10セルに編集されている値のうち、「東京」のものをカウントせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> r <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>, cnt <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    <span class="hljs-keyword">For</span> r = <span class="hljs-number">1</span> <span class="hljs-keyword">To</span> <span class="hljs-number">10</span>
+        <span class="hljs-keyword">If</span> Cells(r, <span class="hljs-number">1</span>) = <span class="hljs-string">"東京"</span> <span class="hljs-keyword">Then</span>
+            cnt = cnt + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">Next</span>
+    Debug.Print cnt
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>SUMIF(A1:A10,&quot;東京&quot;, B1:B10)をVBAで組め</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> r <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>, sum_val <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    <span class="hljs-keyword">For</span> r = <span class="hljs-number">1</span> <span class="hljs-keyword">To</span> <span class="hljs-number">10</span>
+        <span class="hljs-keyword">If</span> Cells(r, <span class="hljs-number">1</span>) = <span class="hljs-string">"東京"</span> <span class="hljs-keyword">Then</span>
+            sum_val = sum_val + Cells(r, <span class="hljs-number">2</span>)
+        <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+    <span class="hljs-keyword">Next</span>
+    Debug.Print sum_val
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="2-5-%E6%96%87%E5%AD%97%E5%88%97%E3%82%92%E7%B5%90%E5%90%88">2-5. 文字列を結合</h3>
+<p>A1～A3セルの文字列を結合せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> s <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>, r <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    <span class="hljs-keyword">For</span> r = <span class="hljs-number">1</span> <span class="hljs-keyword">To</span> <span class="hljs-number">3</span>
+        s = s &amp; Cells(r, <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">Next</span>
+    Debug.Print s
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h2 id="3-%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88">3. ステートメント</h2>
+<h3 id="3-1-exit%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88">3-1. Exitステートメント</h3>
+<p>プロシージャを作成し、即時にExitステートメントで抜けよ。</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Sub</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+
+<span class="hljs-keyword">Function</span> Sample2()
+    <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Function</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Function</span>
+</div></code></pre>
+<p>ForループとWhileループを作成し、即時にExitステートメントで抜けよ。</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> i <span class="hljs-keyword">As</span> <span class="hljs-built_in">Integer</span>
+    <span class="hljs-keyword">For</span> i = <span class="hljs-number">0</span> <span class="hljs-keyword">To</span> <span class="hljs-number">100</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">For</span>
+    <span class="hljs-keyword">Next</span>
+    <span class="hljs-keyword">Do</span> <span class="hljs-keyword">While</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Do</span>
+    <span class="hljs-keyword">Loop</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+
+</div></code></pre>
+<h3 id="3-2-select-case%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88">3-2. Select Caseステートメント</h3>
+<p>整数値による分岐をSelectを用い作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> val <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    val = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">Select</span> <span class="hljs-keyword">Case</span> val
+        <span class="hljs-keyword">Case</span> <span class="hljs-number">1</span>
+            Debug.Print <span class="hljs-string">"hoge"</span>
+        <span class="hljs-keyword">Case</span> <span class="hljs-number">2</span>
+            Debug.Print <span class="hljs-string">"piyo"</span>
+        <span class="hljs-keyword">Case</span> <span class="hljs-number">3</span>
+            Debug.Print <span class="hljs-string">"fuga"</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>文字列による分岐をSelectを用い作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> s <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+    s = <span class="hljs-string">"月曜"</span>
+    <span class="hljs-keyword">Select</span> <span class="hljs-keyword">Case</span> s
+        <span class="hljs-keyword">Case</span> <span class="hljs-string">"月曜"</span>
+            Debug.Print <span class="hljs-string">"hoge"</span>
+        <span class="hljs-keyword">Case</span> <span class="hljs-string">"火曜"</span>
+            Debug.Print <span class="hljs-string">"piyo"</span>
+        <span class="hljs-keyword">Case</span> <span class="hljs-string">"水曜"</span>
+            Debug.Print <span class="hljs-string">"fuga"</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>A1セルに入力された値が10未満の場合と20以上の場合とそれ以外で処理を分岐させよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> val <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    val = Range(<span class="hljs-string">"A1"</span>).Value
+    <span class="hljs-keyword">Select</span> <span class="hljs-keyword">Case</span> val
+        <span class="hljs-keyword">Case</span> <span class="hljs-keyword">Is</span> &lt; <span class="hljs-number">10</span>
+            Debug.Print <span class="hljs-string">"hoge"</span>
+        <span class="hljs-keyword">Case</span> <span class="hljs-keyword">Is</span> &gt;= <span class="hljs-number">20</span>
+            Debug.Print <span class="hljs-string">"piyo"</span>
+        <span class="hljs-keyword">Case</span> <span class="hljs-keyword">Else</span>
+            Debug.Print <span class="hljs-string">"fuga"</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="3-3-doloop%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88">3-3. Do...Loopステートメント</h3>
+<p>WhileループとDo Whileループを作成し、即座にExitで抜けよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Do</span> <span class="hljs-keyword">While</span> <span class="hljs-literal">True</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Do</span>
+    <span class="hljs-keyword">Loop</span>
+    <span class="hljs-keyword">Do</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Do</span>
+    <span class="hljs-keyword">Loop</span> <span class="hljs-keyword">While</span> <span class="hljs-literal">True</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>Untilを用い、A1セルが空欄の間は処理を繰り返せ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Do</span> <span class="hljs-keyword">Until</span> Range(<span class="hljs-string">"A1"</span>).Value &lt;&gt; <span class="hljs-string">""</span>
+        <span class="hljs-keyword">Exit</span> <span class="hljs-keyword">Do</span>
+    <span class="hljs-keyword">Loop</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="3-4-for-each-%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88">3-4. For Each ステートメント</h3>
+<p>ワークシートの名前を列挙せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> ws <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> ws <span class="hljs-keyword">In</span> Worksheets
+        Debug.Print ws.Name
+    <span class="hljs-keyword">Next</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>Range(&quot;A1:A3&quot;)の全ての値を2倍にせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> rng <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> rng <span class="hljs-keyword">In</span> Range(<span class="hljs-string">"A1:A3"</span>)
+        rng.Value = rng.Value * <span class="hljs-number">2</span>
+    <span class="hljs-keyword">Next</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>選択されているセル全ての値を2倍にせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> rng <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> rng <span class="hljs-keyword">In</span> Selection
+        rng.Value = rng.Value * <span class="hljs-number">2</span>
+    <span class="hljs-keyword">Next</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>長さ3、要素10, 20, 30の配列を作成し、総和をとれ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> A <span class="hljs-keyword">As</span> Variant: A = Array(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>, <span class="hljs-number">30</span>)
+    <span class="hljs-keyword">Dim</span> a_i <span class="hljs-keyword">As</span> Variant
+    <span class="hljs-keyword">Dim</span> sum_a <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> a_i <span class="hljs-keyword">In</span> A
+        sum_a = sum_a + a_i
+    <span class="hljs-keyword">Next</span>
+    Debug.Print sum_a
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="3-5-if%E3%82%B9%E3%83%86%E3%83%BC%E3%83%88%E3%83%A1%E3%83%B3%E3%83%88">3-5. Ifステートメント</h3>
+<p>今日が月曜日の場合、1を、それ以外の時は0を出力せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> wd <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+    wd = WeekdayName(Weekday(Now()))
+    <span class="hljs-keyword">If</span> wd = <span class="hljs-string">"月曜日"</span> <span class="hljs-keyword">Then</span>
+        Debug.Print <span class="hljs-number">1</span>
+    <span class="hljs-keyword">Else</span>
+        Debug.Print <span class="hljs-number">0</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h2 id="4-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E6%93%8D%E4%BD%9C">4. ファイルの操作</h2>
+<h3 id="4-1-%E3%83%96%E3%83%83%E3%82%AF%E3%82%92%E9%96%8B%E3%81%8F">4-1. ブックを開く</h3>
+<p>新しいファイルを作成し、ファイルを保存し、ファイルを閉じ、そのファイルを開け</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> wb <span class="hljs-keyword">As</span> Workbook, fn <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+    <span class="hljs-keyword">Set</span> wb = Workbooks.Add
+    <span class="hljs-keyword">Call</span> wb.SaveAs(Filename:=<span class="hljs-string">"test"</span>)
+    fn = wb.FullName
+    wb.Close
+    <span class="hljs-keyword">Call</span> Workbooks.Open(Filename:=fn)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>今日の西暦、月、日付を文字列で表示せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    Debug.Print Format(Now(), <span class="hljs-string">"yyyymmdd"</span>)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="4-3-%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E3%82%B3%E3%83%94%E3%83%BC%E3%81%99%E3%82%8B">4-3. ファイルをコピーする</h3>
+<p>新しいファイルを作成し、ファイルを保存し、ファイルを別名でコピーせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> wb <span class="hljs-keyword">As</span> Workbook, fn <span class="hljs-keyword">As</span> <span class="hljs-built_in">String</span>
+    <span class="hljs-keyword">Set</span> wb = Workbooks.Add
+    wb.SaveAs Filename:=<span class="hljs-string">"test"</span>
+    fn = wb.FullName
+    wb.Close
+    <span class="hljs-keyword">Call</span> FileCopy(fn, <span class="hljs-string">"test2.xlsx"</span>)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="4-4-%E3%83%95%E3%82%A9%E3%83%AB%E3%83%80%E3%83%BC%E3%82%92%E4%BD%9C%E6%88%90%E3%81%9B%E3%82%88">4-4. フォルダーを作成せよ</h3>
+<p>フォルダーを作成せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    MkDir <span class="hljs-string">"test"</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h2 id="5-%E3%83%AF%E3%83%BC%E3%82%AF%E3%82%B7%E3%83%BC%E3%83%88%E9%96%A2%E6%95%B0">5. ワークシート関数</h2>
+<h3 id="5-2-%E3%81%84%E3%82%8D%E3%81%84%E3%82%8D%E3%81%AA%E9%96%A2%E6%95%B0">5-2. いろいろな関数</h3>
+<p>ワークシート関数を駆使し、A列で3番目に大きい値と、3番目に小さい値を求めよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">With</span> WorksheetFunction
+        Debug.Print .Large(Range(<span class="hljs-string">"A:A"</span>), <span class="hljs-number">3</span>)
+        Debug.Print .Small(Range(<span class="hljs-string">"A:A"</span>), <span class="hljs-number">3</span>)
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>ワークシート関数を駆使し、今月の末尾が何日か調べよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> d <span class="hljs-keyword">As</span> <span class="hljs-built_in">Date</span>
+    d = WorksheetFunction.EoMonth(Now(), <span class="hljs-number">0</span>)
+    Debug.Print d
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>2022年2月1日が何曜日か調べよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> d <span class="hljs-keyword">As</span> <span class="hljs-built_in">Date</span>
+    d = DateSerial(<span class="hljs-number">2022</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)
+    Debug.Print WeekdayName(Weekday(d))
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h2 id="6-%E3%82%BB%E3%83%AB%E3%81%AE%E6%A4%9C%E7%B4%A2%E3%81%A8%E3%82%AA%E3%83%BC%E3%83%88%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC">6. セルの検索とオートフィルター</h2>
+<h3 id="6-1-%E3%82%BB%E3%83%AB%E3%81%AE%E6%A4%9C%E7%B4%A2">6-1. セルの検索</h3>
+<p>A列のうち、&quot;涼宮&quot;を含むセルを探し、選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> find <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> find = Range(<span class="hljs-string">"A:A"</span>).find(<span class="hljs-string">"涼宮"</span>)
+    find.<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>A列のうち、&quot;長門&quot;を含むセルを探し、存在しなかった場合-1を出力せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> find <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> find = Range(<span class="hljs-string">"A:A"</span>).find(<span class="hljs-string">"長門"</span>)
+    <span class="hljs-keyword">If</span> find <span class="hljs-keyword">Is</span> <span class="hljs-literal">Nothing</span> <span class="hljs-keyword">Then</span>
+        Debug.Print <span class="hljs-number">-1</span>
+    <span class="hljs-keyword">Else</span>:
+        find.<span class="hljs-keyword">Select</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>A1:Z999セルのうち、C10セルより後で初めて&quot;涼宮&quot;が出てくるセルを選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> find <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> find = Range(<span class="hljs-string">"A1:Z999"</span>).find(<span class="hljs-string">"涼宮"</span>, Range(<span class="hljs-string">"C10"</span>))
+    find.<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>A列のうち、完全一致で&quot;涼宮&quot;を検索し、セルを選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> find <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> find = Range(<span class="hljs-string">"A:A"</span>).find(<span class="hljs-string">"涼宮"</span>, LookAt:=xlWhole)
+    find.<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>A列のうち、部分一致で&quot;涼宮&quot;を検索し、セルを選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> find <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> find = Range(<span class="hljs-string">"A:A"</span>).find(<span class="hljs-string">"涼宮"</span>, LookAt:=xlPart)
+    find.<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="6-2-%E6%A4%9C%E7%B4%A2%E7%B5%90%E6%9E%9C%E3%81%AE%E6%93%8D%E4%BD%9C">6-2. 検索結果の操作</h3>
+<p>A列のうち、&quot;涼宮&quot;を含むセルを探し、その行を削除せよ。ループは使用しないこと</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> find <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> find = Range(<span class="hljs-string">"A:A"</span>).find(<span class="hljs-string">"涼宮"</span>)
+    find.EntireRow.Delete
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>A列のうち、&quot;涼宮&quot;を含むセルを探し、1列右のセルに1000と入力せよ。ループは使用しないこと</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> find <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> find = Range(<span class="hljs-string">"A:A"</span>).find(<span class="hljs-string">"涼宮"</span>)
+    find.Offset(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>).Value = <span class="hljs-number">1000</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>A列のうち、&quot;涼宮&quot;を含むセルを探し、そのセルから右に有効値が続く限りの範囲を（Shift+Ctrl+Rightと同じ操作）D1セルにコピーせよ。ループは使用しないこと</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> find <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> find = Range(<span class="hljs-string">"A:A"</span>).find(<span class="hljs-string">"涼宮"</span>)
+    <span class="hljs-keyword">Call</span> Range(find, find.<span class="hljs-keyword">End</span>(xlToRight)).Copy(Range(<span class="hljs-string">"D1"</span>))
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>A列のうち、&quot;涼宮&quot;を含むセルを探し、そのセルを含む1行3列の範囲をD1セルにコピーせよ。ループは使用しないこと</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> find <span class="hljs-keyword">As</span> Range
+    <span class="hljs-keyword">Set</span> find = Range(<span class="hljs-string">"A:A"</span>).find(<span class="hljs-string">"涼宮"</span>)
+    <span class="hljs-keyword">Call</span> find.Resize(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>).Copy(Range(<span class="hljs-string">"D1"</span>))
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="6-3-%E3%82%AA%E3%83%BC%E3%83%88%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%BC%E3%81%AE%E6%93%8D%E4%BD%9C">6-3. オートフィルターの操作</h3>
+<p>オートフィルターで、B列の値が300以上900未満の行を絞り込め</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Call</span> Range(<span class="hljs-string">"A1"</span>).AutoFilter(<span class="hljs-number">2</span>, <span class="hljs-string">"&gt;=300"</span>, xlAnd, <span class="hljs-string">"&lt;900"</span>)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>オートフィルターで、A列の値が&quot;涼宮&quot;, &quot;長門&quot;, &quot;朝比奈&quot;の行を絞り込め</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> filt_val_list <span class="hljs-keyword">As</span> Variant
+    filt_val_list = Array(<span class="hljs-string">"涼宮"</span>, <span class="hljs-string">"長門"</span>, <span class="hljs-string">"朝比奈"</span>)
+    <span class="hljs-keyword">Call</span> Range(<span class="hljs-string">"A1"</span>).AutoFilter(<span class="hljs-number">1</span>, filt_val_list, xlFilterValues)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>オートフィルターで、A列が&quot;涼宮&quot;の行を絞り込み、新たに追加したシートに絞り込んだ結果をコピーせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Dim</span> cur_ws <span class="hljs-keyword">As</span> Worksheet, add_ws <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">Set</span> cur_ws = ActiveSheet
+    <span class="hljs-keyword">Set</span> add_ws = Worksheets.Add
+    <span class="hljs-keyword">Call</span> cur_ws.Range(<span class="hljs-string">"A1"</span>).AutoFilter(<span class="hljs-number">1</span>, <span class="hljs-string">"涼宮"</span>)
+    <span class="hljs-keyword">Call</span> cur_ws.Range(<span class="hljs-string">"A1"</span>).CurrentRegion.Copy(add_ws.Range(<span class="hljs-string">"A1"</span>))
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>オートフィルターで、A列の値が&quot;涼宮&quot;のものを絞り込み、ワークシート関数を駆使し、絞り込んだ結果が何行あるか調べよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Call</span> Range(<span class="hljs-string">"A1"</span>).AutoFilter(<span class="hljs-number">1</span>, <span class="hljs-string">"涼宮"</span>)
+    <span class="hljs-keyword">Dim</span> cnt <span class="hljs-keyword">As</span> <span class="hljs-built_in">Long</span>
+    Debug.Print WorksheetFunction.Subtotal(<span class="hljs-number">3</span>, Range(<span class="hljs-string">"A:A"</span>)) - <span class="hljs-number">1</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>オートフィルターを駆使し、A列の値が&quot;涼宮&quot;の場合、B列の値を100とせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample()
+    <span class="hljs-keyword">Call</span> Range(<span class="hljs-string">"A1"</span>).AutoFilter(<span class="hljs-number">1</span>, <span class="hljs-string">"涼宮"</span>)
+    Range(Range(<span class="hljs-string">"A2"</span>), Range(<span class="hljs-string">"A2"</span>).<span class="hljs-keyword">End</span>(xlDown)).Offset(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>).Value = <span class="hljs-number">100</span>
+    Range(<span class="hljs-string">"A1"</span>).AutoFilter
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h2 id="7-%E3%83%87%E3%83%BC%E3%82%BF%E3%81%AE%E4%B8%A6%E3%81%B3%E6%9B%BF%E3%81%88">7. データの並び替え</h2>
+<h3 id="7-1-excel2007%E4%BB%A5%E9%99%8D%E3%81%AE%E4%B8%A6%E3%81%B3%E6%9B%BF%E3%81%88">7-1. Excel2007以降の並び替え</h3>
+<p>A~D列に乱数が入ったシートを、D列の値順で、Sortオブジェクトを用い、引数はすべて規定値で並び替えよ。</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> ws <span class="hljs-keyword">As</span> Worksheet
+    <span class="hljs-keyword">Set</span> ws = Sheets(<span class="hljs-string">"Sheet1"</span>)
+    <span class="hljs-keyword">With</span> ws.Sort
+        .SortFields.Clear
+        .SortFields.Add2 <span class="hljs-keyword">Key</span>:=Range(<span class="hljs-string">"D2"</span>)
+
+        .SetRange Range(<span class="hljs-string">"A:D"</span>)
+        .Apply
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>Excel2007以降に追加された、Sortオブジェクトの引数について、次表を埋めよ</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">引数SortOn</th>
+<th style="text-align:center">意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">xlSortOnValues</td>
+<td style="text-align:center">セル内のデータで並び替える</td>
+</tr>
+<tr>
+<td style="text-align:center">xlSortOnCellColor</td>
+<td style="text-align:center">セルの背景色で並び替える</td>
+</tr>
+<tr>
+<td style="text-align:center">xlSortOnFontColor</td>
+<td style="text-align:center">セルの文字色で並び替える</td>
+</tr>
+<tr>
+<td style="text-align:center">xlSortOnIcon</td>
+<td style="text-align:center">条件付き書式のアイコンで並び替える</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">引数Order</th>
+<th style="text-align:center">意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">xlAscending</td>
+<td style="text-align:center">昇順</td>
+</tr>
+<tr>
+<td style="text-align:center">xlDescending</td>
+<td style="text-align:center">降順</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">引数DataOption</th>
+<th style="text-align:center">意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">xlSortNormal</td>
+<td style="text-align:center">数値と文字列を別々に並び替える</td>
+</tr>
+<tr>
+<td style="text-align:center">xlSortTextAsNumbers</td>
+<td style="text-align:center">文字列を数値とみなして並び替える</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Headerプロパティ</th>
+<th style="text-align:center">意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">xlGuess</td>
+<td style="text-align:center">自動判定</td>
+</tr>
+<tr>
+<td style="text-align:center">xlYes</td>
+<td style="text-align:center">1行目は飛ばす</td>
+</tr>
+<tr>
+<td style="text-align:center">xlNo</td>
+<td style="text-align:center">1行目も含む</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Orientationプロパティ</th>
+<th style="text-align:center">意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">xlTopToBottom</td>
+<td style="text-align:center">上下に並び替え</td>
+</tr>
+<tr>
+<td style="text-align:center">xlLeftToRight</td>
+<td style="text-align:center">左右に並び替える</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">SortMethodプロパティ</th>
+<th style="text-align:center">意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">xlPinYin</td>
+<td style="text-align:center">ふりがなで並び替え</td>
+</tr>
+<tr>
+<td style="text-align:center">xlStroke</td>
+<td style="text-align:center">文字コードで並び替え</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-2-excel2003%E3%81%BE%E3%81%A7%E3%81%AE%E4%B8%A6%E3%81%B3%E6%9B%BF%E3%81%88">7-2. Excel2003までの並び替え</h3>
+<p>A1~D10セルを、Sortメソッドを用いソートせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample2()
+    Range(<span class="hljs-string">"A1:D10"</span>).Sort key1:=Range(<span class="hljs-string">"A1"</span>), Order1:=xlAscending, Header:=xlYes
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>A1セルのフリガナが設定されているか判定せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample3()
+    Debug.Print Range(<span class="hljs-string">"A1"</span>).Phonetic.<span class="hljs-keyword">Text</span> &lt;&gt; Range(<span class="hljs-string">"A1"</span>).Value
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h2 id="8-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%AE%E6%93%8D%E4%BD%9C">8. テーブルの操作</h2>
+<h3 id="8-1-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%82%92%E7%89%B9%E5%AE%9A%E3%81%99%E3%82%8B">8-1. テーブルを特定する</h3>
+<p>A1セルにあるテーブルを変数に入れよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> tbl <span class="hljs-keyword">As</span> ListObject
+    <span class="hljs-keyword">Set</span> tbl = Range(<span class="hljs-string">"A1"</span>).ListObject
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>Sheet1にある1つめのテーブルを変数に入れよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> tbl <span class="hljs-keyword">As</span> ListObject
+    <span class="hljs-keyword">Set</span> tbl = Worksheets(<span class="hljs-number">1</span>).ListObjects(<span class="hljs-number">1</span>)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="8-2-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%AE%E9%83%A8%E4%BD%8D%E3%82%92%E7%89%B9%E5%AE%9A%E3%81%99%E3%82%8B">8-2. テーブルの部位を特定する</h3>
+<p>テーブル1のタイトル行を含む全体を選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    ActiveSheet.ListObjects(<span class="hljs-string">"テーブル1"</span>).Range.<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>テーブル1のタイトル行を含まないテーブルのデータ全体を選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    ActiveSheet.ListObjects(<span class="hljs-string">"テーブル1"</span>).DataBodyRange.<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>テーブル1のタイトル行を選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    ActiveSheet.ListObjects(<span class="hljs-string">"テーブル1"</span>).HeaderRowRange.<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>テーブル1の列全体を順番に選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> list_cols <span class="hljs-keyword">As</span> ListColumns
+    <span class="hljs-keyword">Set</span> list_cols = ActiveSheet.ListObjects(<span class="hljs-string">"テーブル1"</span>).ListColumns
+    <span class="hljs-keyword">Dim</span> col <span class="hljs-keyword">As</span> ListColumn
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> col <span class="hljs-keyword">In</span> list_cols
+        col.Range.<span class="hljs-keyword">Select</span>
+    <span class="hljs-keyword">Next</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>テーブル1の列の見出し行を含まないでデータを順番に選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> list_cols <span class="hljs-keyword">As</span> ListColumns
+    <span class="hljs-keyword">Set</span> list_cols = ActiveSheet.ListObjects(<span class="hljs-string">"テーブル1"</span>).ListColumns
+    <span class="hljs-keyword">Dim</span> col <span class="hljs-keyword">As</span> ListColumn
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> col <span class="hljs-keyword">In</span> list_cols
+        col.DataBodyRange.<span class="hljs-keyword">Select</span>
+    <span class="hljs-keyword">Next</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>テーブル1の行を順番に選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">Dim</span> list_rows <span class="hljs-keyword">As</span> ListRows
+    <span class="hljs-keyword">Set</span> list_rows = ActiveSheet.ListObjects(<span class="hljs-string">"テーブル1"</span>).ListRows
+    <span class="hljs-keyword">Dim</span> row <span class="hljs-keyword">As</span> ListRow
+    <span class="hljs-keyword">For</span> <span class="hljs-keyword">Each</span> row <span class="hljs-keyword">In</span> list_rows
+        row.Range.<span class="hljs-keyword">Select</span>
+    <span class="hljs-keyword">Next</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="8-3-%E6%A7%8B%E9%80%A0%E5%8C%96%E5%8F%82%E7%85%A7%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E7%89%B9%E5%AE%9A%E3%81%99%E3%82%8B">8-3. 構造化参照を使って特定する</h3>
+<p>テーブルのうちヘッダーを含まないデータ全体を構造化参照で選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    Range(<span class="hljs-string">"テーブル1"</span>).<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>テーブル全体を構造化参照で選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    Range(<span class="hljs-string">"テーブル1[#ALL]"</span>).<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>テーブルのうち特定の列をヘッダーを含めず構造化参照で選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    Range(<span class="hljs-string">"テーブル1[c1]"</span>).<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>テーブルのうち特定の列をヘッダーを含めて構造化参照で選択せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    Range(<span class="hljs-string">"テーブル1[[#ALL], [c1]]"</span>).<span class="hljs-keyword">Select</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="8-4-%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%82%92%E6%8D%9C%E6%9F%BB%E3%81%99%E3%82%8B">8-4. 特定のデータを捜査する</h3>
+<p>テーブルを特定の条件で抽出し、見出し行を含めずコピーせよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    Range(<span class="hljs-string">"A1"</span>).ListObject.DataBodyRange.AutoFilter <span class="hljs-number">1</span>, <span class="hljs-string">"=1"</span>
+    Range(<span class="hljs-string">"A1"</span>).ListObject.DataBodyRange.Copy Range(<span class="hljs-string">"A20"</span>)
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<h3 id="8-5-%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E3%81%AE%E8%A1%8C%E5%85%A8%E4%BD%93%E3%82%92%E5%89%8A%E9%99%A4%E3%81%9B%E3%82%88">8-5. テーブルの行全体を削除せよ</h3>
+<p>ListObjectを用い、特定の条件を満たす行を削除せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    <span class="hljs-keyword">With</span> Range(<span class="hljs-string">"A1"</span>).ListObject.DataBodyRange
+        .AutoFilter <span class="hljs-number">1</span>, <span class="hljs-string">"=1"</span>
+        .EntireRow.Delete
+        .AutoFilter <span class="hljs-number">1</span>
+    <span class="hljs-keyword">End</span> <span class="hljs-keyword">With</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+<p>構造化参照を用い、特定の条件を満たす行を削除せよ</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">Sub</span> Sample1()
+    Range(<span class="hljs-string">"テーブル1"</span>).AutoFilter <span class="hljs-number">1</span>, <span class="hljs-string">"=1"</span>
+    Range(<span class="hljs-string">"テーブル1[#Data]"</span>).EntireRow.Delete
+    Range(<span class="hljs-string">"テーブル1"</span>).AutoFilter <span class="hljs-number">1</span>
+<span class="hljs-keyword">End</span> <span class="hljs-keyword">Sub</span>
+</div></code></pre>
+
+</body>
+</html>
