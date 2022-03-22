@@ -757,6 +757,14 @@ Sub Sample1()
 End Sub
 ```
 
+テーブルの名前を使って、テーブルを変数に入れよ
+
+```VB
+Sub Sample1()
+    Dim tbl As ListObject
+    Set tbl = Range("テーブル1")
+```
+
 ### 8-2. テーブルの部位を特定する
 
 テーブル1のタイトル行を含む全体を選択せよ
@@ -888,5 +896,157 @@ Sub Sample1()
     Range("テーブル1").AutoFilter 1, "=1"
     Range("テーブル1[#Data]").EntireRow.Delete
     Range("テーブル1").AutoFilter 1
+End Sub
+```
+
+### 8-6. 列を挿入する
+
+テーブルに新しい列を挿入し、[数値]列の2倍を計算する算式を編集せよ
+
+```VB
+Sub Sample1()
+    Dim n As Long
+    With Range("A1").ListObject
+        .ListColumns.Add
+        n = .ListColumns.Count
+        .ListColumns(n).DataBodyRange = "=[@数値]*2"
+    End With
+End Sub
+```
+
+### 9-2. エラーへの対応
+
+エラーが発生した場合の条件分岐を作り、発生したエラーの番号とエラーのメッセージを表示せよ
+
+```VB
+Sub Sample1()
+    On Error GoTo ErrHandler:
+    Debug.Print 1 / 0
+ErrHandler:
+    MsgBox "Err.Number=" & Err.Number & " " & Err.Description
+    Err.Clear
+End Sub
+```
+
+エラーを無視せよ
+
+```VB
+Sub Sample1()
+    On Error Resume Next
+    Debug.Print 1 / 0
+End Sub
+```
+
+### 9-3. データのクレンジング
+
+文字列を全角文字に変換して、そのあと半角文字に戻せ
+
+```VB
+Sub Sample1()
+    Dim text_narrow As String: Dim text_wide As String
+    text_narrow = "abc-123-ｱｲｳ"
+    text_wide = StrConv(text_narrow, vbWide)
+    Debug.Print text_wide
+    text_narrow = StrConv(text_wide, vbNarrow)
+    Debug.Print text_narrow
+End Sub
+```
+
+文字列からハイフンを取り除け(abc-123をabc123にせよ)
+
+```VB
+Sub Sample1()
+    Dim text As String
+    text = "abc-123"
+    Debug.Print Replace(text, "-", "")
+End Sub
+```
+
+セルに入力された文字列「2022/03/20」を日付に変更せよ
+
+```VB
+Sub Sample1()
+    Range("A2").NumberFormat = "yyyy/m/d"
+    Range("A2").Value = Range("A2").Value  ' 値を入れなおさななければならない
+End Sub
+```
+
+### 10-2. イミディエイトウィンドウ
+
+イミディエイトウィンドウでA1セルの値を表示せよ。ただし、debug.printは使うな
+
+```VB
+?Range("A1")
+```
+
+イミディエイトウィンドウで次を行うと何が起こるか
+
+```VB
+Range("A1").Value = 100
+```
+
+A1セルの値が100になる
+
+イミディエイトウィンドウで次を行うと何が起こるか
+
+```VB
+Dim a as Long
+a = 100
+MsgBox a
+```
+
+イミディエイトウィンドウでは変数を宣言できないので、エラーとなる
+
+イミディエイトウィンドウで実行中のマクロの変数を表示させよ
+
+```VB
+Sub Sample1()
+    Dim a As Long
+    a = 100
+End Sub
+```
+
+```VB
+?a
+```
+
+### 10-3. マクロを一時停止する
+
+変数iが10の倍数の場合に、処理を一時停止させよ
+
+```VB
+Sub Sample1()
+    Dim i As Long
+    For i = 0 To 100
+        If i Mod 10 = 0 Then
+            Stop
+        End If
+    Next
+End Sub
+```
+
+### 10-5. デバッグでよく使う関数
+
+A1セルの値の型の名前を出力せよ
+
+```VB
+Sub Sample1()
+    Debug.Print TypeName(Range("A1").Value)
+End Sub
+```
+
+A1セルが数値か否かを判定せよ
+
+```VB
+Sub Sample1()
+    Debug.Print IsNumeric(Range("A1").Value)
+End Sub
+```
+
+A1セルが日付か否かを判定せよ
+
+```VB
+Sub Sample1()
+    Debug.Print IsDate(Range("A1").Value)
 End Sub
 ```
