@@ -570,7 +570,7 @@ End Sub
 
 ### 6-2. 検索結果の操作
 
-A列のうち、"涼宮"を含むセルを探し、その行を削除せよ
+A列のうち、"涼宮"を含むセルを探し、その行を削除せよ。ループは使用しないこと
 
 ```VB
 Sub Sample()
@@ -580,7 +580,7 @@ Sub Sample()
 End Sub
 ```
 
-A列のうち、"涼宮"を含むセルを探し、1列右のセルに1000と入力せよ
+A列のうち、"涼宮"を含むセルを探し、1列右のセルに1000と入力せよ。ループは使用しないこと
 
 ```VB
 Sub Sample()
@@ -590,7 +590,7 @@ Sub Sample()
 End Sub
 ```
 
-A列のうち、"涼宮"を含むセルを探し、そのセルから右に有効値が続く限りの範囲を（Shift+Ctrl+Rightと同じ操作）D1セルにコピーせよ
+A列のうち、"涼宮"を含むセルを探し、そのセルから右に有効値が続く限りの範囲を（Shift+Ctrl+Rightと同じ操作）D1セルにコピーせよ。ループは使用しないこと
 
 ```VB
 Sub Sample()
@@ -600,7 +600,7 @@ Sub Sample()
 End Sub
 ```
 
-A列のうち、"涼宮"を含むセルを探し、そのセルを含む1行3列の範囲をD1セルにコピーせよ
+A列のうち、"涼宮"を含むセルを探し、そのセルを含む1行3列の範囲をD1セルにコピーせよ。ループは使用しないこと
 
 ```VB
 Sub Sample()
@@ -662,3 +662,391 @@ Sub Sample()
 End Sub
 ```
 
+## 7. データの並び替え
+
+### 7-1. Excel2007以降の並び替え
+
+A~D列に乱数が入ったシートを、D列の値順で、Sortオブジェクトを用い、引数はすべて規定値で並び替えよ。
+
+```VB
+Sub Sample1()
+    Dim ws As Worksheet
+    Set ws = Sheets("Sheet1")
+    With ws.Sort
+        .SortFields.Clear
+        .SortFields.Add2 Key:=Range("D2")
+
+        .SetRange Range("A:D")
+        .Apply
+    End With
+End Sub
+```
+
+Excel2007以降に追加された、Sortオブジェクトの引数について、次表を埋めよ
+
+|引数SortOn|意味|
+|:-:|:-:|
+|xlSortOnValues|セル内のデータで並び替える|
+|xlSortOnCellColor|セルの背景色で並び替える|
+|xlSortOnFontColor|セルの文字色で並び替える|
+|xlSortOnIcon|条件付き書式のアイコンで並び替える|
+
+|引数Order|意味|
+|:-:|:-:|
+|xlAscending|昇順|
+|xlDescending|降順|
+
+|引数DataOption|意味|
+|:-:|:-:|
+|xlSortNormal|数値と文字列を別々に並び替える|
+|xlSortTextAsNumbers|文字列を数値とみなして並び替える|
+
+|Headerプロパティ|意味|
+|:-:|:-:|
+|xlGuess|自動判定|
+|xlYes|1行目は飛ばす|
+|xlNo|1行目も含む|
+
+|Orientationプロパティ|意味|
+|:-:|:-:|
+|xlTopToBottom|上下に並び替え|
+|xlLeftToRight|左右に並び替える|
+
+|SortMethodプロパティ|意味|
+|:-:|:-:|
+|xlPinYin|ふりがなで並び替え|
+|xlStroke|文字コードで並び替え|
+
+### 7-2. Excel2003までの並び替え
+
+A1~D10セルを、Sortメソッドを用いソートせよ
+
+```VB
+Sub Sample2()
+    Range("A1:D10").Sort key1:=Range("A1"), Order1:=xlAscending, Header:=xlYes
+End Sub
+```
+
+A1セルのフリガナが設定されているか判定せよ
+
+```VB
+Sub Sample3()
+    Debug.Print Range("A1").Phonetic.Text <> Range("A1").Value
+End Sub
+```
+
+## 8. テーブルの操作
+
+### 8-1. テーブルを特定する
+
+A1セルにあるテーブルを変数に入れよ
+
+```VB
+Sub Sample1()
+    Dim tbl As ListObject
+    Set tbl = Range("A1").ListObject
+End Sub
+```
+
+Sheet1にある1つめのテーブルを変数に入れよ
+
+```VB
+Sub Sample1()
+    Dim tbl As ListObject
+    Set tbl = Worksheets(1).ListObjects(1)
+End Sub
+```
+
+テーブルの名前を使って、テーブルを変数に入れよ
+
+```VB
+Sub Sample1()
+    Dim tbl As ListObject
+    Set tbl = Range("テーブル1")
+```
+
+### 8-2. テーブルの部位を特定する
+
+テーブル1のタイトル行を含む全体を選択せよ
+
+```VB
+Sub Sample1()
+    ActiveSheet.ListObjects("テーブル1").Range.Select
+End Sub
+```
+
+テーブル1のタイトル行を含まないテーブルのデータ全体を選択せよ
+
+```VB
+Sub Sample1()
+    ActiveSheet.ListObjects("テーブル1").DataBodyRange.Select
+End Sub
+```
+
+テーブル1のタイトル行を選択せよ
+
+```VB
+Sub Sample1()
+    ActiveSheet.ListObjects("テーブル1").HeaderRowRange.Select
+End Sub
+```
+
+テーブル1の列全体を順番に選択せよ
+
+```VB
+Sub Sample1()
+    Dim list_cols As ListColumns
+    Set list_cols = ActiveSheet.ListObjects("テーブル1").ListColumns
+    Dim col As ListColumn
+    For Each col In list_cols
+        col.Range.Select
+    Next
+End Sub
+```
+
+テーブル1の列の見出し行を含まないでデータを順番に選択せよ
+
+```VB
+Sub Sample1()
+    Dim list_cols As ListColumns
+    Set list_cols = ActiveSheet.ListObjects("テーブル1").ListColumns
+    Dim col As ListColumn
+    For Each col In list_cols
+        col.DataBodyRange.Select
+    Next
+End Sub
+```
+
+テーブル1の行を順番に選択せよ
+
+```VB
+Sub Sample1()
+    Dim list_rows As ListRows
+    Set list_rows = ActiveSheet.ListObjects("テーブル1").ListRows
+    Dim row As ListRow
+    For Each row In list_rows
+        row.Range.Select
+    Next
+End Sub
+```
+
+### 8-3. 構造化参照を使って特定する
+
+テーブルのうちヘッダーを含まないデータ全体を構造化参照で選択せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1").Select
+End Sub
+```
+
+テーブル全体を構造化参照で選択せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1[#ALL]").Select
+End Sub
+```
+
+テーブルのうち特定の列をヘッダーを含めず構造化参照で選択せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1[c1]").Select
+End Sub
+```
+
+テーブルのうち特定の列をヘッダーを含めて構造化参照で選択せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1[[#ALL], [c1]]").Select
+End Sub
+```
+
+### 8-4. 特定のデータを捜査する
+
+テーブルを特定の条件で抽出し、見出し行を含めずコピーせよ
+
+```VB
+Sub Sample1()
+    Range("A1").ListObject.DataBodyRange.AutoFilter 1, "=1"
+    Range("A1").ListObject.DataBodyRange.Copy Range("A20")
+End Sub
+```
+
+### 8-5. テーブルの行全体を削除せよ
+
+ListObjectを用い、特定の条件を満たす行を削除せよ
+
+```VB
+Sub Sample1()
+    With Range("A1").ListObject.DataBodyRange
+        .AutoFilter 1, "=1"
+        .EntireRow.Delete
+        .AutoFilter 1
+    End With
+End Sub
+```
+
+構造化参照を用い、特定の条件を満たす行を削除せよ
+
+```VB
+Sub Sample1()
+    Range("テーブル1").AutoFilter 1, "=1"
+    Range("テーブル1[#Data]").EntireRow.Delete
+    Range("テーブル1").AutoFilter 1
+End Sub
+```
+
+### 8-6. 列を挿入する
+
+テーブルに新しい列を挿入し、[数値]列の2倍を計算する算式を編集せよ
+
+```VB
+Sub Sample1()
+    Dim n As Long
+    With Range("A1").ListObject
+        .ListColumns.Add
+        n = .ListColumns.Count
+        .ListColumns(n).DataBodyRange = "=[@数値]*2"
+    End With
+End Sub
+```
+
+### 9-2. エラーへの対応
+
+エラーが発生した場合の条件分岐を作り、発生したエラーの番号とエラーのメッセージを表示せよ
+
+```VB
+Sub Sample1()
+    On Error GoTo ErrHandler:
+    Debug.Print 1 / 0
+ErrHandler:
+    MsgBox "Err.Number=" & Err.Number & " " & Err.Description
+    Err.Clear
+End Sub
+```
+
+エラーを無視せよ
+
+```VB
+Sub Sample1()
+    On Error Resume Next
+    Debug.Print 1 / 0
+End Sub
+```
+
+### 9-3. データのクレンジング
+
+文字列を全角文字に変換して、そのあと半角文字に戻せ
+
+```VB
+Sub Sample1()
+    Dim text_narrow As String: Dim text_wide As String
+    text_narrow = "abc-123-ｱｲｳ"
+    text_wide = StrConv(text_narrow, vbWide)
+    Debug.Print text_wide
+    text_narrow = StrConv(text_wide, vbNarrow)
+    Debug.Print text_narrow
+End Sub
+```
+
+文字列からハイフンを取り除け(abc-123をabc123にせよ)
+
+```VB
+Sub Sample1()
+    Dim text As String
+    text = "abc-123"
+    Debug.Print Replace(text, "-", "")
+End Sub
+```
+
+セルに入力された文字列「2022/03/20」を日付に変更せよ
+
+```VB
+Sub Sample1()
+    Range("A2").NumberFormat = "yyyy/m/d"
+    Range("A2").Value = Range("A2").Value  ' 値を入れなおさななければならない
+End Sub
+```
+
+### 10-2. イミディエイトウィンドウ
+
+イミディエイトウィンドウでA1セルの値を表示せよ。ただし、debug.printは使うな
+
+```VB
+?Range("A1")
+```
+
+イミディエイトウィンドウで次を行うと何が起こるか
+
+```VB
+Range("A1").Value = 100
+```
+
+A1セルの値が100になる
+
+イミディエイトウィンドウで次を行うと何が起こるか
+
+```VB
+Dim a as Long
+a = 100
+MsgBox a
+```
+
+イミディエイトウィンドウでは変数を宣言できないので、エラーとなる
+
+イミディエイトウィンドウで実行中のマクロの変数を表示させよ
+
+```VB
+Sub Sample1()
+    Dim a As Long
+    a = 100
+End Sub
+```
+
+```VB
+?a
+```
+
+### 10-3. マクロを一時停止する
+
+変数iが10の倍数の場合に、処理を一時停止させよ
+
+```VB
+Sub Sample1()
+    Dim i As Long
+    For i = 0 To 100
+        If i Mod 10 = 0 Then
+            Stop
+        End If
+    Next
+End Sub
+```
+
+### 10-5. デバッグでよく使う関数
+
+A1セルの値の型の名前を出力せよ
+
+```VB
+Sub Sample1()
+    Debug.Print TypeName(Range("A1").Value)
+End Sub
+```
+
+A1セルが数値か否かを判定せよ
+
+```VB
+Sub Sample1()
+    Debug.Print IsNumeric(Range("A1").Value)
+End Sub
+```
+
+A1セルが日付か否かを判定せよ
+
+```VB
+Sub Sample1()
+    Debug.Print IsDate(Range("A1").Value)
+End Sub
+```

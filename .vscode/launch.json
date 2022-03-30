@@ -10,7 +10,8 @@
             "request": "launch",
             "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
             "args": [
-                "-g"
+                "-g",
+                "-std=gnu++17"
             ],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
