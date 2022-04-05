@@ -1,2 +1,2 @@
-:endl;
-}
+
+    Float& operator++(int) {

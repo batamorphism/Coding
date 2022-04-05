@@ -5,5 +5,5 @@ def set_param(str):
     の代替品
     """
     if str != "max_unroll_recursion=-1":
-        raise
+        raise "pypyjit.set_param('max_unroll_recursion=-1')"
     pass
