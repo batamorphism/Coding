@@ -4,6 +4,7 @@ from bisect import bisect_left, bisect_right
 from typing import Generic, Iterable, Iterator, TypeVar, Union, List
 T = TypeVar('T')
 
+
 class SortedSet(Generic[T]):
     BUCKET_RATIO = 50
     REBUILD_RATIO = 170
