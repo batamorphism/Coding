@@ -3,21 +3,25 @@
 
 class A {
  public:
-    A() {
-        std::cout << "A()" << std::endl;
-    }
-    A(int val) {
-        std::cout << "A(int val)" << std::endl;
-    }
-    ~A() {
-        std::cout << "~A()" << std::endl;
+    virtual void foo() = 0;
+};
+
+class B : A {
+ public:
+    void foo() final {
+        std::cout << "B::foo()" << std::endl;
     }
 };
 
-int main() {
-    A* array = new A[10] {
-        A(1),
-    };
+class C : B {
+ public:
+    void foo() final {
+        std::cout << "C::foo()" << std::endl;
+    }
+};
+}
 
-    delete [] array;
+int main() {
+    B b;
+    b.foo();
 }
