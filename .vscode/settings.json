@@ -85,7 +85,8 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "valarray": "cpp"
-    }
+    },
+    "python.analysis.typeCheckingMode": "basic"
     // code runnerの実行をターミナルでするように（標準入力が使えるように）
     //"editor.formatOnSave": true //自動成形はoff
 }
