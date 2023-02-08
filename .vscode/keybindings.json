@@ -1,7 +1,0 @@
-[
-  {
-    "key": "ctrl+alt+c",
-    "command": "workbench.action.tasks.terminate",
-    "args": "terminateAll"
-  }
-]
